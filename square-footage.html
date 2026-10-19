@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Square Footage Calculator - Rooms, Circles, Triangles and Cost</title>
+<meta name="description" content="Calculate square feet for rectangles, circles and triangles using feet and inches, add several areas together, and convert to square yards, square meters and acres. Optional price per square foot.">
+<link rel="canonical" href="https://calcmoose.com/square-footage.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CalcMoose">
+<meta property="og:title" content="Square Footage Calculator - Rooms, Circles, Triangles and Cost"><meta property="og:description" content="Calculate square feet for rectangles, circles and triangles using feet and inches, add several areas together, and convert to square yards, square meters and acres. Optional price per square foot.">
+<meta property="og:url" content="https://calcmoose.com/square-footage.html"><meta property="og:locale" content="en_US">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3494310005301969" crossorigin="anonymous"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Square Footage Calculator", "url": "https://calcmoose.com/square-footage.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "inLanguage": "en", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Calculate square feet for rectangles, circles and triangles using feet and inches, add several areas together, and convert to square yards, square meters and acres. Optional price per square foot."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate square footage of a room?", "acceptedAnswer": {"@type": "Answer", "text": "Measure length and width in feet and multiply. A 12 ft × 15 ft room is 180 sq ft. For inches, divide by 12 first: 10 ft 6 in = 10.5 ft."}}, {"@type": "Question", "name": "How do I measure an L-shaped room?", "acceptedAnswer": {"@type": "Answer", "text": "Split it into two rectangles, find each area and add them. Use the 'Add another area' button below."}}, {"@type": "Question", "name": "How many square feet are in an acre?", "acceptedAnswer": {"@type": "Answer", "text": "43,560 square feet. A square yard is 9 square feet and a square meter is about 10.764 square feet."}}]}</script>
+</head><body>
+<header class="top"><div class="wrap"><a class="logo" href="/">CalcMoose</a></div></header>
+<main class="wrap c4"><p class="crumb"><a href="/">Home</a> › Home &amp; DIY</p><h1 class="th"><i class="ic">📐</i>Square Footage Calculator</h1><div class="tool">
+ <div id="areas"></div>
+ <button class="ghost" id="add">+ Add another area</button>
+ <div class="row" style="margin-top:12px"><label>Price per sq ft ($, optional)<input class="money" id="P" inputmode="decimal" placeholder="e.g. 4.50"></label></div>
+ <div class="result" id="out"></div>
+</div>
+<style>.area{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px}.area .row{margin-bottom:6px}.area small{color:var(--sub)}</style>
+<h2>Formulas</h2>
+<ul><li><b>Rectangle</b> = length × width</li><li><b>Circle</b> = π × (diameter ÷ 2)²</li><li><b>Triangle</b> = base × height ÷ 2</li><li>1 sq yd = 9 sq ft · 1 m² = 10.7639 sq ft · 1 acre = 43,560 sq ft</li></ul>
+<p>When buying flooring, sod or carpet, add 5–10% for cuts and waste. Real estate listings in the U.S. usually measure finished living area and exclude garages and unfinished basements.</p>
+<script src="/app.js"></script>
+<script>
+let n=0;
+function ftin(id){return `<span style="display:flex;gap:4px"><input type="number" class="f" data-id="${id}f" value="" placeholder="ft"><input type="number" class="i" data-id="${id}i" placeholder="in"></span>`;}
+function addArea(l,w){const k=n++;const el=document.createElement('div');el.className='area';el.innerHTML=`<div class="row"><label>Shape<select class="sh"><option value="r">Rectangle</option><option value="c">Circle</option><option value="t">Triangle</option></select></label></div><div class="row"><label class="a1">Length${ftin('a')}</label><label class="a2">Width${ftin('b')}</label></div><small class="sub"></small>`;
+ $('#areas').append(el);if(l){el.querySelector('[data-id=af]').value=l;el.querySelector('[data-id=bf]').value=w;}
+ el.querySelector('.sh').onchange=e=>{const s=e.target.value;el.querySelector('.a1').firstChild.textContent=s==='c'?'Diameter':s==='t'?'Base':'Length';el.querySelector('.a2').hidden=s==='c';el.querySelector('.a2').firstChild.textContent=s==='t'?'Height':'Width';calc();};}
+function calc(){let tot=0;document.querySelectorAll('.area').forEach(el=>{const g=k=>(parseFloat(el.querySelector(`[data-id=${k}f]`).value)||0)+(parseFloat(el.querySelector(`[data-id=${k}i]`).value)||0)/12;
+ const s=el.querySelector('.sh').value,a=g('a'),b=g('b');const ar=s==='r'?a*b:s==='c'?Math.PI*(a/2)**2:a*b/2;el.querySelector('.sub').textContent=`= ${nf(ar)} sq ft`;tot+=ar;});
+ const p=num($('#P'));$('#out').innerHTML=`<div class="big">${nf(tot)} sq ft</div><div class="stats"><div><span>Square yards</span><b>${nf(tot/9)}</b></div><div><span>Square meters</span><b>${nf(tot/10.7639)}</b></div><div><span>Acres</span><b>${nf(tot/43560,4)}</b></div>${p?`<div><span>Cost at ${usd(p)}/sq ft</span><b>${usd(tot*p)}</b></div>`:''}</div>`;}
+$('#add').onclick=()=>{addArea();calc();};addArea(12,15);document.addEventListener('input',calc);calc();
+</script>
+<section class="faq"><h2>Frequently asked questions</h2><details><summary>How do I calculate square footage of a room?</summary><p>Measure length and width in feet and multiply. A 12 ft × 15 ft room is 180 sq ft. For inches, divide by 12 first: 10 ft 6 in = 10.5 ft.</p></details><details><summary>How do I measure an L-shaped room?</summary><p>Split it into two rectangles, find each area and add them. Use the &#x27;Add another area&#x27; button below.</p></details><details><summary>How many square feet are in an acre?</summary><p>43,560 square feet. A square yard is 9 square feet and a square meter is about 10.764 square feet.</p></details></section><section><h2>More calculators</h2><div class="grid"><a class="card c4" href="/concrete.html" data-k="Concrete Calculator Slab &amp; post holes → yards and bags"><i class="ic">🧱</i><span class="tx"><b>Concrete Calculator</b><span>Slab &amp; post holes → yards and bags</span></span></a><a class="card c4" href="/mulch.html" data-k="Mulch, Soil &amp; Gravel Calculator Area + depth → cubic yards, bags"><i class="ic">🌱</i><span class="tx"><b>Mulch, Soil &amp; Gravel Calculator</b><span>Area + depth → cubic yards, bags</span></span></a><a class="card c4" href="/paint.html" data-k="Paint Calculator Room size → gallons of paint"><i class="ic">🎨</i><span class="tx"><b>Paint Calculator</b><span>Room size → gallons of paint</span></span></a><a class="card c4" href="/tile.html" data-k="Tile &amp; Flooring Calculator Tiles and boxes for a floor or wall"><i class="ic">▦</i><span class="tx"><b>Tile &amp; Flooring Calculator</b><span>Tiles and boxes for a floor or wall</span></span></a><a class="card c3" href="/hourly-to-salary.html" data-k="Hourly to Salary Calculator Hourly ↔ yearly, monthly, weekly pay"><i class="ic">$</i><span class="tx"><b>Hourly to Salary Calculator</b><span>Hourly ↔ yearly, monthly, weekly pay</span></span></a><a class="card c3" href="/time-card.html" data-k="Time Card Calculator Clock in/out → weekly hours &amp; pay"><i class="ic">🕘</i><span class="tx"><b>Time Card Calculator</b><span>Clock in/out → weekly hours &amp; pay</span></span></a></div></section><p class="updated">Last reviewed: 2026-10-17</p></main><footer class="foot"><div class="wrap">
+<nav><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Use</a><a href="/contact.html">Contact</a></nav>
+<p>© 2026 CalcMoose. Results are estimates for general information only. Check important decisions with a qualified professional.</p>
+</div></footer>
+</body></html>

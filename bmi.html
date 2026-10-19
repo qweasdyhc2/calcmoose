@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BMI Calculator for Adults - Pounds and Feet or Metric</title>
+<meta name="description" content="Calculate body mass index (BMI) for adults 20 and older in pounds and feet/inches or kilograms and centimeters, with the CDC weight category and the healthy weight range for your height.">
+<link rel="canonical" href="https://calcmoose.com/bmi.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CalcMoose">
+<meta property="og:title" content="BMI Calculator for Adults - Pounds and Feet or Metric"><meta property="og:description" content="Calculate body mass index (BMI) for adults 20 and older in pounds and feet/inches or kilograms and centimeters, with the CDC weight category and the healthy weight range for your height.">
+<meta property="og:url" content="https://calcmoose.com/bmi.html"><meta property="og:locale" content="en_US">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3494310005301969" crossorigin="anonymous"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "BMI Calculator (Adults)", "url": "https://calcmoose.com/bmi.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "inLanguage": "en", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Calculate body mass index (BMI) for adults 20 and older in pounds and feet/inches or kilograms and centimeters, with the CDC weight category and the healthy weight range for your height."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is a healthy BMI?", "acceptedAnswer": {"@type": "Answer", "text": "For adults 20 and older, the CDC classifies a BMI from 18.5 to less than 25 as healthy weight, 25 to less than 30 as overweight, and 30 or higher as obesity."}}, {"@type": "Question", "name": "Is BMI accurate for athletes or older adults?", "acceptedAnswer": {"@type": "Answer", "text": "BMI is a screening tool, not a diagnosis. It does not separate muscle from fat, so muscular people can show a high BMI, and older adults can have a normal BMI with low muscle mass. Talk to a healthcare provider about your own health."}}, {"@type": "Question", "name": "Can I use this for children or teens?", "acceptedAnswer": {"@type": "Answer", "text": "No. For ages 2 to 19, BMI is compared with CDC growth charts by age and sex (BMI-for-age percentile). Use the CDC's child and teen BMI calculator instead."}}]}</script>
+</head><body>
+<header class="top"><div class="wrap"><a class="logo" href="/">CalcMoose</a></div></header>
+<main class="wrap c6"><p class="crumb"><a href="/">Home</a> › Health &amp; Pets</p><h1 class="th"><i class="ic">⚖</i>BMI Calculator (Adults)</h1><div class="tool">
+ <div class="tabs"><button class="on" data-m="us">US units</button><button data-m="si">Metric</button></div>
+ <div class="row" id="us"><label>Height (ft)<input type="number" id="FT" value="5"></label><label>Height (in)<input type="number" id="IN" value="9" step="0.5"></label><label>Weight (lb)<input type="number" id="LB" value="170" step="0.5"></label></div>
+ <div class="row" id="si" hidden><label>Height (cm)<input type="number" id="CM" value="175"></label><label>Weight (kg)<input type="number" id="KG" value="77" step="0.1"></label></div>
+ <div class="result" id="out"></div>
+</div>
+<h2>CDC BMI categories for adults 20 and older</h2>
+<div class="scroll"><table><thead><tr><th>BMI</th><th>Category</th></tr></thead><tbody><tr><td>Less than 18.5</td><td>Underweight</td></tr><tr><td>18.5 to less than 25</td><td>Healthy weight</td></tr><tr><td>25 to less than 30</td><td>Overweight</td></tr><tr><td>30 to less than 35</td><td>Obesity, class 1</td></tr><tr><td>35 to less than 40</td><td>Obesity, class 2</td></tr><tr><td>40 or greater</td><td>Obesity, class 3 (severe)</td></tr></tbody></table></div>
+<h2>Formula</h2>
+<ul><li><b>US units</b>: BMI = 703 × weight (lb) ÷ height (in)²</li><li><b>Metric</b>: BMI = weight (kg) ÷ height (m)²</li></ul>
+<p class="note">Source: Centers for Disease Control and Prevention, <a href="https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html" rel="nofollow">Adult BMI Categories</a>. This page is for general information and is not medical advice.</p>
+<script src="/app.js"></script>
+<script>
+let m='us';
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));m=b.dataset.m;$('#us').hidden=m!=='us';$('#si').hidden=m!=='si';calc();});
+const cat=b=>b<18.5?'Underweight':b<25?'Healthy weight':b<30?'Overweight':b<35?'Obesity, class 1':b<40?'Obesity, class 2':'Obesity, class 3';
+function calc(){const v=i=>num($('#'+i));let hIn,bmi;
+ if(m==='us'){hIn=v('FT')*12+v('IN');bmi=hIn?703*v('LB')/hIn**2:0;}else{hIn=v('CM')/2.54;bmi=v('CM')?v('KG')/(v('CM')/100)**2:0;}
+ if(!bmi){$('#out').innerHTML='Enter height and weight.';return;}bmi=Math.round(bmi*10)/10;
+ const lo=18.5*hIn**2/703,hi=24.9*hIn**2/703,r=m==='us'?`${nf(lo,0)}–${nf(hi,0)} lb`:`${nf(lo*0.45359237,1)}–${nf(hi*0.45359237,1)} kg`;
+ $('#out').innerHTML=`<div class="big">BMI ${bmi.toFixed(1)} · ${cat(bmi)}</div><p>Healthy weight range for your height (BMI 18.5–24.9): <b>${r}</b></p>`;}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',calc));calc();
+</script>
+<section class="faq"><h2>Frequently asked questions</h2><details><summary>What is a healthy BMI?</summary><p>For adults 20 and older, the CDC classifies a BMI from 18.5 to less than 25 as healthy weight, 25 to less than 30 as overweight, and 30 or higher as obesity.</p></details><details><summary>Is BMI accurate for athletes or older adults?</summary><p>BMI is a screening tool, not a diagnosis. It does not separate muscle from fat, so muscular people can show a high BMI, and older adults can have a normal BMI with low muscle mass. Talk to a healthcare provider about your own health.</p></details><details><summary>Can I use this for children or teens?</summary><p>No. For ages 2 to 19, BMI is compared with CDC growth charts by age and sex (BMI-for-age percentile). Use the CDC&#x27;s child and teen BMI calculator instead.</p></details></section><section><h2>More calculators</h2><div class="grid"><a class="card c6" href="/dog-age.html" data-k="Dog Age Calculator Dog years → human years"><i class="ic">🐶</i><span class="tx"><b>Dog Age Calculator</b><span>Dog years → human years</span></span></a><a class="card c3" href="/hourly-to-salary.html" data-k="Hourly to Salary Calculator Hourly ↔ yearly, monthly, weekly pay"><i class="ic">$</i><span class="tx"><b>Hourly to Salary Calculator</b><span>Hourly ↔ yearly, monthly, weekly pay</span></span></a><a class="card c3" href="/time-card.html" data-k="Time Card Calculator Clock in/out → weekly hours &amp; pay"><i class="ic">🕘</i><span class="tx"><b>Time Card Calculator</b><span>Clock in/out → weekly hours &amp; pay</span></span></a><a class="card c3" href="/overtime.html" data-k="Overtime Pay Calculator Time and a half over 40 hours"><i class="ic">⏱</i><span class="tx"><b>Overtime Pay Calculator</b><span>Time and a half over 40 hours</span></span></a><a class="card c4" href="/concrete.html" data-k="Concrete Calculator Slab &amp; post holes → yards and bags"><i class="ic">🧱</i><span class="tx"><b>Concrete Calculator</b><span>Slab &amp; post holes → yards and bags</span></span></a><a class="card c4" href="/mulch.html" data-k="Mulch, Soil &amp; Gravel Calculator Area + depth → cubic yards, bags"><i class="ic">🌱</i><span class="tx"><b>Mulch, Soil &amp; Gravel Calculator</b><span>Area + depth → cubic yards, bags</span></span></a></div></section><p class="updated">Last reviewed: 2026-10-17</p></main><footer class="foot"><div class="wrap">
+<nav><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Use</a><a href="/contact.html">Contact</a></nav>
+<p>© 2026 CalcMoose. Results are estimates for general information only. Check important decisions with a qualified professional.</p>
+</div></footer>
+</body></html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grade Calculator - Weighted Average of Your Course Grade</title>
+<meta name="description" content="Enter your scores and weights for homework, quizzes, tests and exams to get your weighted course grade and letter grade. Add or remove rows as needed.">
+<link rel="canonical" href="https://calcmoose.com/grade-calculator.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CalcMoose">
+<meta property="og:title" content="Grade Calculator - Weighted Average of Your Course Grade"><meta property="og:description" content="Enter your scores and weights for homework, quizzes, tests and exams to get your weighted course grade and letter grade. Add or remove rows as needed.">
+<meta property="og:url" content="https://calcmoose.com/grade-calculator.html"><meta property="og:locale" content="en_US">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3494310005301969" crossorigin="anonymous"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Grade Calculator", "url": "https://calcmoose.com/grade-calculator.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "inLanguage": "en", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Enter your scores and weights for homework, quizzes, tests and exams to get your weighted course grade and letter grade. Add or remove rows as needed."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How is a weighted grade calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply each score by its weight, add the results, then divide by the total of the weights. Scores of 90% (weight 20), 80% (weight 30) and 70% (weight 50) give (90×20 + 80×30 + 70×50) ÷ 100 = 77%."}}, {"@type": "Question", "name": "Do the weights have to add up to 100?", "acceptedAnswer": {"@type": "Answer", "text": "No. The calculator divides by the total weight you entered, so weights of 1, 2 and 2 work as well as 20, 40 and 40."}}, {"@type": "Question", "name": "How do I find the score I need on the final?", "acceptedAnswer": {"@type": "Answer", "text": "Use the final grade calculator on this site. It solves for the exam score that gets you a target course grade."}}]}</script>
+</head><body>
+<header class="top"><div class="wrap"><a class="logo" href="/">CalcMoose</a></div></header>
+<main class="wrap c2"><p class="crumb"><a href="/">Home</a> › School</p><h1 class="th"><i class="ic">📝</i>Grade Calculator</h1><div class="tool">
+ <div class="scroll"><table class="tc"><thead><tr><th>Assignment</th><th>Score (%)</th><th>Weight</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+ <button class="ghost" id="add">+ Add row</button>
+ <div class="result" id="out"></div>
+</div>
+<style>.tc td{padding:4px}.tc input{padding:6px 4px;min-width:0;font-size:14px}.tc input[type=number]{width:70px}.tc th{font-size:12px;text-align:left}.rm{background:none;border:0;font-size:18px;cursor:pointer;color:inherit}</style>
+<h2>Weighted average formula</h2>
+<p>Course grade = Σ(score × weight) ÷ Σ(weight). Letter grades use the common 90/80/70/60 scale; your school may use plus/minus grades or different cutoffs. Want to know what you need on the exam? Try the <a href="/final-grade.html">final grade calculator</a>.</p>
+<script src="/app.js"></script>
+<script>
+const rows=$('#rows');
+function addRow(n,s,w){const tr=document.createElement('tr');tr.innerHTML=`<td><input type="text" value="${n}" aria-label="Name"></td><td><input type="number" step="0.1" value="${s}" aria-label="Score"></td><td><input type="number" step="0.1" value="${w}" aria-label="Weight"></td><td><button class="rm" aria-label="Remove row">×</button></td>`;
+ tr.querySelector('.rm').onclick=()=>{tr.remove();calc();};tr.addEventListener('input',calc);rows.appendChild(tr);}
+function letter(g){return g>=90?'A':g>=80?'B':g>=70?'C':g>=60?'D':'F';}
+function calc(){let sw=0,sum=0;rows.querySelectorAll('tr').forEach(tr=>{const i=tr.querySelectorAll('input[type=number]');if(i[0].value===''||i[1].value==='')return;const w=num(i[1]);sw+=w;sum+=num(i[0])*w;});
+ if(!sw){$('#out').innerHTML='Enter at least one score with a weight above 0.';return;}
+ const g=sum/sw;$('#out').innerHTML=`<div class="big">${nf(g,2)}% (${letter(g)})</div><p class="note">Total weight entered: ${nf(sw,1)}</p>`;}
+[['Homework',95,20],['Quizzes',88,20],['Midterm',82,25],['Final exam',78,35]].forEach(r=>addRow(...r));
+$('#add').onclick=()=>{addRow('',"","");calc();};calc();
+</script>
+<section class="faq"><h2>Frequently asked questions</h2><details><summary>How is a weighted grade calculated?</summary><p>Multiply each score by its weight, add the results, then divide by the total of the weights. Scores of 90% (weight 20), 80% (weight 30) and 70% (weight 50) give (90×20 + 80×30 + 70×50) ÷ 100 = 77%.</p></details><details><summary>Do the weights have to add up to 100?</summary><p>No. The calculator divides by the total weight you entered, so weights of 1, 2 and 2 work as well as 20, 40 and 40.</p></details><details><summary>How do I find the score I need on the final?</summary><p>Use the final grade calculator on this site. It solves for the exam score that gets you a target course grade.</p></details></section><section><h2>More calculators</h2><div class="grid"><a class="card c2" href="/final-grade.html" data-k="Final Grade Calculator Score needed on the final exam"><i class="ic">🎯</i><span class="tx"><b>Final Grade Calculator</b><span>Score needed on the final exam</span></span></a><a class="card c2" href="/gpa.html" data-k="GPA Calculator Semester &amp; cumulative GPA (4.0)"><i class="ic">🎓</i><span class="tx"><b>GPA Calculator</b><span>Semester &amp; cumulative GPA (4.0)</span></span></a><a class="card c3" href="/hourly-to-salary.html" data-k="Hourly to Salary Calculator Hourly ↔ yearly, monthly, weekly pay"><i class="ic">$</i><span class="tx"><b>Hourly to Salary Calculator</b><span>Hourly ↔ yearly, monthly, weekly pay</span></span></a><a class="card c3" href="/time-card.html" data-k="Time Card Calculator Clock in/out → weekly hours &amp; pay"><i class="ic">🕘</i><span class="tx"><b>Time Card Calculator</b><span>Clock in/out → weekly hours &amp; pay</span></span></a><a class="card c3" href="/overtime.html" data-k="Overtime Pay Calculator Time and a half over 40 hours"><i class="ic">⏱</i><span class="tx"><b>Overtime Pay Calculator</b><span>Time and a half over 40 hours</span></span></a><a class="card c4" href="/concrete.html" data-k="Concrete Calculator Slab &amp; post holes → yards and bags"><i class="ic">🧱</i><span class="tx"><b>Concrete Calculator</b><span>Slab &amp; post holes → yards and bags</span></span></a></div></section><p class="updated">Last reviewed: 2026-10-19</p></main><footer class="foot"><div class="wrap">
+<nav><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Use</a><a href="/contact.html">Contact</a></nav>
+<p>© 2026 CalcMoose. Results are estimates for general information only. Check important decisions with a qualified professional.</p>
+</div></footer>
+</body></html>

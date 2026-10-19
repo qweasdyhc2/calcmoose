@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Time Card Calculator - Weekly Hours Worked with Breaks</title>
+<meta name="description" content="Add up hours worked from clock-in and clock-out times for each day, minus unpaid breaks. Handles overnight shifts and shows weekly total, overtime over 40 hours and gross pay.">
+<link rel="canonical" href="https://calcmoose.com/time-card.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CalcMoose">
+<meta property="og:title" content="Time Card Calculator - Weekly Hours Worked with Breaks"><meta property="og:description" content="Add up hours worked from clock-in and clock-out times for each day, minus unpaid breaks. Handles overnight shifts and shows weekly total, overtime over 40 hours and gross pay.">
+<meta property="og:url" content="https://calcmoose.com/time-card.html"><meta property="og:locale" content="en_US">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3494310005301969" crossorigin="anonymous"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Time Card Calculator", "url": "https://calcmoose.com/time-card.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "inLanguage": "en", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Add up hours worked from clock-in and clock-out times for each day, minus unpaid breaks. Handles overnight shifts and shows weekly total, overtime over 40 hours and gross pay."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I convert minutes to decimal hours for payroll?", "acceptedAnswer": {"@type": "Answer", "text": "Divide minutes by 60. 15 minutes = 0.25 h, 30 minutes = 0.5 h, 45 minutes = 0.75 h. So 7 hours 45 minutes is 7.75 hours."}}, {"@type": "Question", "name": "What about a shift that goes past midnight?", "acceptedAnswer": {"@type": "Answer", "text": "Enter the times as they are, e.g. 10:00 PM in and 6:00 AM out. If the clock-out time is earlier than the clock-in time, the calculator treats it as the next day."}}, {"@type": "Question", "name": "Are breaks paid?", "acceptedAnswer": {"@type": "Answer", "text": "Under federal rules, short breaks of about 5–20 minutes are usually paid work time, while bona fide meal periods of 30 minutes or more, when you are fully relieved of duty, are usually unpaid. Enter only unpaid break minutes."}}]}</script>
+</head><body>
+<header class="top"><div class="wrap"><a class="logo" href="/">CalcMoose</a></div></header>
+<main class="wrap c3"><p class="crumb"><a href="/">Home</a> › Work &amp; Pay</p><h1 class="th"><i class="ic">🕘</i>Time Card Calculator</h1><div class="tool">
+ <div class="scroll"><table class="tc"><thead><tr><th>Day</th><th>Clock in</th><th>Clock out</th><th>Break min</th><th>Hours</th></tr></thead><tbody id="rows"></tbody></table></div>
+ <div class="row" style="margin-top:12px"><label>Hourly rate ($, optional)<input class="money" id="rate" inputmode="decimal" placeholder="e.g. 18"></label><label>Overtime after (hours/week)<input type="number" id="thr" value="40"></label></div>
+ <button class="ghost" id="clr">Clear all</button>
+ <div class="result" id="out"></div>
+</div>
+<style>.tc td{padding:4px}.tc input{padding:6px 2px;min-width:0;font-size:14px}.tc input[type=number]{width:52px}.tc th{font-size:12px;text-align:left}.tc td:first-child{font-size:13px}.tc td:last-child{font-weight:700;white-space:nowrap}</style>
+<h2>How hours are added up</h2>
+<p>Enter only <b>unpaid</b> break minutes. For each day: (clock-out − clock-in) − unpaid break. If clock-out is earlier than clock-in, 24 hours are added (overnight shift). The weekly total is shown as hours and minutes and as decimal hours, which is what most payroll systems use.</p>
+<p>If you enter an hourly rate, hours over the overtime threshold (40 per week under the federal FLSA) are paid at 1.5× in the pay estimate.</p>
+<script src="/app.js"></script>
+<script>
+const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+$('#rows').innerHTML=days.map((d,i)=>`<tr><td>${d.slice(0,3)}</td><td><input type="time" id="i${i}" value="${i<5?'09:00':''}"></td><td><input type="time" id="o${i}" value="${i<5?'17:30':''}"></td><td><input type="number" id="b${i}" value="${i<5?30:0}" min="0"></td><td id="h${i}"></td></tr>`).join('');
+const mins=t=>{const[h,m]=t.split(':').map(Number);return h*60+m;};
+const hm=m=>`${Math.floor(m/60)}h ${String(Math.round(m%60)).padStart(2,'0')}m`;
+function calc(){let tot=0;
+ days.forEach((_,i)=>{const a=$('#i'+i).value,b=$('#o'+i).value;let m=0;
+  if(a&&b){m=mins(b)-mins(a);if(m<0)m+=1440;m=Math.max(0,m-num($('#b'+i)));}
+  $('#h'+i).textContent=m?nf(m/60):'';tot+=m;});
+ const h=tot/60,r=num($('#rate')),t=num($('#thr')),ot=Math.max(0,h-t);
+ $('#out').innerHTML=`<div class="big">${hm(tot)} = ${nf(h)} hours</div>`+(r?`<div class="stats"><div><span>Regular hours</span><b>${nf(h-ot)}</b></div><div><span>Overtime hours</span><b>${nf(ot)}</b></div><div><span>Gross pay</span><b>${usd((h-ot)*r+ot*r*1.5)}</b></div></div>`:'<p class="note">Add an hourly rate to estimate pay.</p>');}
+document.addEventListener('input',calc);calc();
+$('#clr').onclick=()=>{document.querySelectorAll('.tc input').forEach(x=>x.value='');calc();};
+</script>
+<section class="faq"><h2>Frequently asked questions</h2><details><summary>How do I convert minutes to decimal hours for payroll?</summary><p>Divide minutes by 60. 15 minutes = 0.25 h, 30 minutes = 0.5 h, 45 minutes = 0.75 h. So 7 hours 45 minutes is 7.75 hours.</p></details><details><summary>What about a shift that goes past midnight?</summary><p>Enter the times as they are, e.g. 10:00 PM in and 6:00 AM out. If the clock-out time is earlier than the clock-in time, the calculator treats it as the next day.</p></details><details><summary>Are breaks paid?</summary><p>Under federal rules, short breaks of about 5–20 minutes are usually paid work time, while bona fide meal periods of 30 minutes or more, when you are fully relieved of duty, are usually unpaid. Enter only unpaid break minutes.</p></details></section><section><h2>More calculators</h2><div class="grid"><a class="card c3" href="/hourly-to-salary.html" data-k="Hourly to Salary Calculator Hourly ↔ yearly, monthly, weekly pay"><i class="ic">$</i><span class="tx"><b>Hourly to Salary Calculator</b><span>Hourly ↔ yearly, monthly, weekly pay</span></span></a><a class="card c3" href="/overtime.html" data-k="Overtime Pay Calculator Time and a half over 40 hours"><i class="ic">⏱</i><span class="tx"><b>Overtime Pay Calculator</b><span>Time and a half over 40 hours</span></span></a><a class="card c4" href="/concrete.html" data-k="Concrete Calculator Slab &amp; post holes → yards and bags"><i class="ic">🧱</i><span class="tx"><b>Concrete Calculator</b><span>Slab &amp; post holes → yards and bags</span></span></a><a class="card c4" href="/mulch.html" data-k="Mulch, Soil &amp; Gravel Calculator Area + depth → cubic yards, bags"><i class="ic">🌱</i><span class="tx"><b>Mulch, Soil &amp; Gravel Calculator</b><span>Area + depth → cubic yards, bags</span></span></a><a class="card c4" href="/paint.html" data-k="Paint Calculator Room size → gallons of paint"><i class="ic">🎨</i><span class="tx"><b>Paint Calculator</b><span>Room size → gallons of paint</span></span></a><a class="card c4" href="/square-footage.html" data-k="Square Footage Calculator Area in sq ft, sq yd, m², acres"><i class="ic">📐</i><span class="tx"><b>Square Footage Calculator</b><span>Area in sq ft, sq yd, m², acres</span></span></a></div></section><p class="updated">Last reviewed: 2026-10-17</p></main><footer class="foot"><div class="wrap">
+<nav><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Use</a><a href="/contact.html">Contact</a></nav>
+<p>© 2026 CalcMoose. Results are estimates for general information only. Check important decisions with a qualified professional.</p>
+</div></footer>
+</body></html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hours Calculator - Hours and Minutes Between Two Times</title>
+<meta name="description" content="Calculate the hours and minutes between a start time and an end time, including overnight shifts and unpaid breaks. Shows the result in decimal hours for payroll.">
+<link rel="canonical" href="https://calcmoose.com/hours-calculator.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CalcMoose">
+<meta property="og:title" content="Hours Calculator - Hours and Minutes Between Two Times"><meta property="og:description" content="Calculate the hours and minutes between a start time and an end time, including overnight shifts and unpaid breaks. Shows the result in decimal hours for payroll.">
+<meta property="og:url" content="https://calcmoose.com/hours-calculator.html"><meta property="og:locale" content="en_US">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3494310005301969" crossorigin="anonymous"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Hours Calculator", "url": "https://calcmoose.com/hours-calculator.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "inLanguage": "en", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Calculate the hours and minutes between a start time and an end time, including overnight shifts and unpaid breaks. Shows the result in decimal hours for payroll."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate hours between two times?", "acceptedAnswer": {"@type": "Answer", "text": "Subtract the start time from the end time. From 9:15 AM to 5:45 PM is 8 hours 30 minutes. If the end time is earlier than the start time, the calculator assumes the shift ends the next day."}}, {"@type": "Question", "name": "How do I convert hours and minutes to decimal hours?", "acceptedAnswer": {"@type": "Answer", "text": "Divide the minutes by 60 and add them to the hours. 8 hours 30 minutes = 8 + 30/60 = 8.5 hours. 7 hours 45 minutes = 7.75 hours."}}, {"@type": "Question", "name": "How are unpaid breaks handled?", "acceptedAnswer": {"@type": "Answer", "text": "Enter the break length in minutes. It is subtracted from the total time between the two clock times."}}]}</script>
+</head><body>
+<header class="top"><div class="wrap"><a class="logo" href="/">CalcMoose</a></div></header>
+<main class="wrap c1"><p class="crumb"><a href="/">Home</a> › Date &amp; Time</p><h1 class="th"><i class="ic">⏱️</i>Hours Calculator</h1><div class="tool">
+ <div class="row"><label>Start time<input type="time" id="S" value="09:00"></label><label>End time<input type="time" id="E" value="17:30"></label><label>Unpaid break (minutes)<input type="number" id="B" value="30" min="0"></label></div>
+ <div class="result" id="out"></div>
+</div>
+<h2>How the calculation works</h2>
+<p>Each time is converted to minutes after midnight. The difference, minus any break, is the time worked. If the end is earlier than the start, 24 hours are added, so 10:00 PM to 6:00 AM counts as 8 hours. For several days at once, use the <a href="/time-card.html">time card calculator</a>.</p>
+<script src="/app.js"></script>
+<script>
+function calc(){const s=$('#S').value,e=$('#E').value;if(!s||!e){$('#out').innerHTML='Enter a start and end time.';return;}
+ const m=t=>{const [h,x]=t.split(':').map(Number);return h*60+x;};
+ let diff=m(e)-m(s),over=false;if(diff<0){diff+=1440;over=true;}
+ const br=Math.max(0,num($('#B'))),net=diff-br;
+ if(net<0){$('#out').innerHTML='The break is longer than the time between the two times.';return;}
+ const h=Math.floor(net/60),mm=net%60;
+ $('#out').innerHTML=`<div class="big">${h} hours, ${mm} minutes</div><div class="stats"><div><span>Decimal hours</span><b>${nf(net/60,2)}</b></div><div><span>Total minutes</span><b>${nf(net)}</b></div><div><span>Before break</span><b>${Math.floor(diff/60)} h ${diff%60} min</b></div></div>${over?'<p class="note">The end time is earlier than the start time, so this counts as an overnight shift.</p>':''}`;}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',calc));calc();
+</script>
+<section class="faq"><h2>Frequently asked questions</h2><details><summary>How do I calculate hours between two times?</summary><p>Subtract the start time from the end time. From 9:15 AM to 5:45 PM is 8 hours 30 minutes. If the end time is earlier than the start time, the calculator assumes the shift ends the next day.</p></details><details><summary>How do I convert hours and minutes to decimal hours?</summary><p>Divide the minutes by 60 and add them to the hours. 8 hours 30 minutes = 8 + 30/60 = 8.5 hours. 7 hours 45 minutes = 7.75 hours.</p></details><details><summary>How are unpaid breaks handled?</summary><p>Enter the break length in minutes. It is subtracted from the total time between the two clock times.</p></details></section><section><h2>More calculators</h2><div class="grid"><a class="card c1" href="/days-between.html" data-k="Days Between Dates Calculator Days, weeks &amp; business days"><i class="ic">📅</i><span class="tx"><b>Days Between Dates Calculator</b><span>Days, weeks &amp; business days</span></span></a><a class="card c1" href="/date-add.html" data-k="Date Calculator: Add or Subtract Days What date is 90 days from today?"><i class="ic">➕</i><span class="tx"><b>Date Calculator: Add or Subtract Days</b><span>What date is 90 days from today?</span></span></a><a class="card c1" href="/age.html" data-k="Age Calculator Exact age &amp; next birthday"><i class="ic">🎂</i><span class="tx"><b>Age Calculator</b><span>Exact age &amp; next birthday</span></span></a><a class="card c3" href="/hourly-to-salary.html" data-k="Hourly to Salary Calculator Hourly ↔ yearly, monthly, weekly pay"><i class="ic">$</i><span class="tx"><b>Hourly to Salary Calculator</b><span>Hourly ↔ yearly, monthly, weekly pay</span></span></a><a class="card c3" href="/time-card.html" data-k="Time Card Calculator Clock in/out → weekly hours &amp; pay"><i class="ic">🕘</i><span class="tx"><b>Time Card Calculator</b><span>Clock in/out → weekly hours &amp; pay</span></span></a><a class="card c3" href="/overtime.html" data-k="Overtime Pay Calculator Time and a half over 40 hours"><i class="ic">⏱</i><span class="tx"><b>Overtime Pay Calculator</b><span>Time and a half over 40 hours</span></span></a></div></section><p class="updated">Last reviewed: 2026-10-19</p></main><footer class="foot"><div class="wrap">
+<nav><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Use</a><a href="/contact.html">Contact</a></nav>
+<p>© 2026 CalcMoose. Results are estimates for general information only. Check important decisions with a qualified professional.</p>
+</div></footer>
+</body></html>

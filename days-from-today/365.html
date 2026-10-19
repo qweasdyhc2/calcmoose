@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>365 Days From Today - What Date Will It Be?</title>
+<meta name="description" content="Find the exact date 365 days from today, with the day of the week, business days in between and the date 365 days ago. Updates automatically every day.">
+<link rel="canonical" href="https://calcmoose.com/days-from-today/365.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CalcMoose">
+<meta property="og:title" content="365 Days From Today - What Date Will It Be?"><meta property="og:description" content="Find the exact date 365 days from today, with the day of the week, business days in between and the date 365 days ago. Updates automatically every day.">
+<meta property="og:url" content="https://calcmoose.com/days-from-today/365.html"><meta property="og:locale" content="en_US">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3494310005301969" crossorigin="anonymous"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "What Date Is 365 Days From Today?", "url": "https://calcmoose.com/days-from-today/365.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "inLanguage": "en", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Find the exact date 365 days from today, with the day of the week, business days in between and the date 365 days ago. Updates automatically every day."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What date is 365 days from today?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on today's date; the calculator at the top of this page shows it and updates every day. For example, 365 days from Friday, January 1, 2027 is Saturday, January 1, 2028."}}, {"@type": "Question", "name": "How many weeks is 365 days?", "acceptedAnswer": {"@type": "Answer", "text": "365 days is 52 weeks and 1 day, so the end date falls 1 weekday later than the start date."}}, {"@type": "Question", "name": "Does 365 days include weekends?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. 365 calendar days counts every day including weekends and holidays. If a deadline says business days, count Monday to Friday only; the business-day figure above shows how many weekdays are in the period."}}]}</script>
+</head><body>
+<header class="top"><div class="wrap"><a class="logo" href="/">CalcMoose</a></div></header>
+<main class="wrap c1"><p class="crumb"><a href="/">Home</a> › Date &amp; Time</p><h1 class="th"><i class="ic">📅</i>What Date Is 365 Days From Today?</h1><div class="tool">
+ <div class="big" id="res">…</div>
+ <p class="note" id="sub"></p>
+ <div class="stats"><div><span>Weeks</span><b>52 weeks and 1 day</b></div><div><span>About</span><b>12.0 months</b></div><div><span>Business days (Mon–Fri)</span><b id="bd">…</b></div><div><span>365 days ago</span><b id="ago">…</b></div></div>
+ <div class="row" style="margin-top:14px"><label>Count from a different date<input type="date" id="A" data-today></label></div>
+</div>
+<h2>365 days from today</h2>
+<p>Three hundred sixty-five days is 52 weeks and 1 day. In a normal year that is the same date next year, but if a February 29 falls in between, 365 days ends one day short of the same date.</p>
+<p>The date above uses your device's calendar and today's date, so it updates every day. Day 1 is tomorrow; today is not counted. Leap years are handled automatically.</p>
+<h2>365 days from the start of each month</h2>
+<div class="scroll"><table id="tb"><thead><tr><th>Start date</th><th>365 days later</th></tr></thead><tbody></tbody></table></div>
+<h2>Other day counts</h2>
+<div class="pills"><a class="pill" href="/days-from-today/7.html">7 days from today</a><a class="pill" href="/days-from-today/10.html">10 days from today</a><a class="pill" href="/days-from-today/14.html">14 days from today</a><a class="pill" href="/days-from-today/21.html">21 days from today</a><a class="pill" href="/days-from-today/30.html">30 days from today</a><a class="pill" href="/days-from-today/45.html">45 days from today</a><a class="pill" href="/days-from-today/60.html">60 days from today</a><a class="pill" href="/days-from-today/75.html">75 days from today</a><a class="pill" href="/days-from-today/90.html">90 days from today</a><a class="pill" href="/days-from-today/100.html">100 days from today</a><a class="pill" href="/days-from-today/120.html">120 days from today</a><a class="pill" href="/days-from-today/150.html">150 days from today</a><a class="pill" href="/days-from-today/180.html">180 days from today</a><a class="pill" href="/days-from-today/200.html">200 days from today</a><b class="pill on">365 days from today</b></div>
+<p>Need weeks, months or business days instead? Use the <a href="/date-add.html">date calculator</a> or count the <a href="/days-between.html">days between two dates</a>.</p>
+<script src="/app.js"></script>
+<script>
+const N=365;
+function bizBetween(a,b){let k=0,x=new Date(a);const s=b>a?1:-1;while(x.getTime()!==b.getTime()){x.setDate(x.getDate()+s);const w=x.getDay();if(w&&w<6)k++;}return k;}
+function calc(){const a=$('#A').value?d($('#A').value):today(),t=addDays(a,N),isT=diffDays(today(),a)===0;
+ $('#res').textContent=fmt(t);$('#sub').textContent=`${N} days ${isT?'from today':'after '+fmt(a)}`;
+ $('#bd').textContent=bizBetween(a,t);$('#ago').textContent=fmt(addDays(a,-N));}
+$('#A').addEventListener('input',calc);calc();
+const T=today();$('#tb tbody').innerHTML=[...Array(6)].map((_,i)=>{const s=new Date(T.getFullYear(),T.getMonth()+i+1,1);return `<tr><td>${fmt(s)}</td><td>${fmt(addDays(s,N))}</td></tr>`;}).join('');
+</script>
+<section class="faq"><h2>Frequently asked questions</h2><details><summary>What date is 365 days from today?</summary><p>It depends on today&#x27;s date; the calculator at the top of this page shows it and updates every day. For example, 365 days from Friday, January 1, 2027 is Saturday, January 1, 2028.</p></details><details><summary>How many weeks is 365 days?</summary><p>365 days is 52 weeks and 1 day, so the end date falls 1 weekday later than the start date.</p></details><details><summary>Does 365 days include weekends?</summary><p>Yes. 365 calendar days counts every day including weekends and holidays. If a deadline says business days, count Monday to Friday only; the business-day figure above shows how many weekdays are in the period.</p></details></section><section><h2>More calculators</h2><div class="grid"><a class="card c1" href="/days-between.html" data-k="Days Between Dates Calculator Days, weeks &amp; business days"><i class="ic">📅</i><span class="tx"><b>Days Between Dates Calculator</b><span>Days, weeks &amp; business days</span></span></a><a class="card c1" href="/date-add.html" data-k="Date Calculator: Add or Subtract Days What date is 90 days from today?"><i class="ic">➕</i><span class="tx"><b>Date Calculator: Add or Subtract Days</b><span>What date is 90 days from today?</span></span></a><a class="card c1" href="/age.html" data-k="Age Calculator Exact age &amp; next birthday"><i class="ic">🎂</i><span class="tx"><b>Age Calculator</b><span>Exact age &amp; next birthday</span></span></a><a class="card c1" href="/hours-calculator.html" data-k="Hours Calculator Hours between two times"><i class="ic">⏱️</i><span class="tx"><b>Hours Calculator</b><span>Hours between two times</span></span></a><a class="card c3" href="/hourly-to-salary.html" data-k="Hourly to Salary Calculator Hourly ↔ yearly, monthly, weekly pay"><i class="ic">$</i><span class="tx"><b>Hourly to Salary Calculator</b><span>Hourly ↔ yearly, monthly, weekly pay</span></span></a><a class="card c3" href="/time-card.html" data-k="Time Card Calculator Clock in/out → weekly hours &amp; pay"><i class="ic">🕘</i><span class="tx"><b>Time Card Calculator</b><span>Clock in/out → weekly hours &amp; pay</span></span></a></div></section><p class="updated">Last reviewed: 2026-10-18</p></main><footer class="foot"><div class="wrap">
+<nav><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Use</a><a href="/contact.html">Contact</a></nav>
+<p>© 2026 CalcMoose. Results are estimates for general information only. Check important decisions with a qualified professional.</p>
+</div></footer>
+</body></html>

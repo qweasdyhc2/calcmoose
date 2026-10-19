@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Days Between Dates Calculator - Count Days, Weeks and Weekdays</title>
+<meta name="description" content="Count the number of days between two dates, with weeks, months and business days (Monday to Friday). Option to include the end date.">
+<link rel="canonical" href="https://calcmoose.com/days-between.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CalcMoose">
+<meta property="og:title" content="Days Between Dates Calculator - Count Days, Weeks and Weekdays"><meta property="og:description" content="Count the number of days between two dates, with weeks, months and business days (Monday to Friday). Option to include the end date.">
+<meta property="og:url" content="https://calcmoose.com/days-between.html"><meta property="og:locale" content="en_US">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3494310005301969" crossorigin="anonymous"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Days Between Dates Calculator", "url": "https://calcmoose.com/days-between.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "inLanguage": "en", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Count the number of days between two dates, with weeks, months and business days (Monday to Friday). Option to include the end date."}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does the count include the start and end date?", "acceptedAnswer": {"@type": "Answer", "text": "By default it counts the days from the start date up to the end date, like most date tools (Jan 1 to Jan 2 = 1 day). Tick 'Include end date' to count both days (useful for trips or contract periods)."}}, {"@type": "Question", "name": "Are holidays excluded from business days?", "acceptedAnswer": {"@type": "Answer", "text": "No. Business days here are Monday through Friday. Subtract any public holidays in the period yourself, for example the 11 U.S. federal holidays per year."}}, {"@type": "Question", "name": "How are months counted?", "acceptedAnswer": {"@type": "Answer", "text": "Full calendar months from the start date, then the remaining days. Jan 15 to Mar 20 is 2 months and 5 days. When the start day does not exist in the end month, the month ends on its last day: Jan 31 to Feb 28 is 1 month."}}]}</script>
+</head><body>
+<header class="top"><div class="wrap"><a class="logo" href="/">CalcMoose</a></div></header>
+<main class="wrap c1"><p class="crumb"><a href="/">Home</a> › Date &amp; Time</p><h1 class="th"><i class="ic">📅</i>Days Between Dates Calculator</h1><div class="tool">
+ <div class="row"><label>Start date<input type="date" id="A" data-today></label><label>End date<input type="date" id="B"></label></div>
+ <label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="checkbox" id="inc" style="width:auto"> Include end date (+1 day)</label>
+ <div class="result" id="out"></div>
+</div>
+<h2>Handy countdowns</h2>
+<div class="scroll"><table id="cd"><tbody></tbody></table></div>
+<p>Dates are calculated in your local time zone using the Gregorian calendar, so leap years (Feb 29) are counted correctly.</p>
+<script src="/app.js"></script>
+<script>
+$('#B').value=iso(new Date(today().getFullYear(),11,25));
+function bizDays(a,b){let n=0,x=new Date(a);while(x<b){const w=x.getDay();if(w&&w<6)n++;x.setDate(x.getDate()+1);}return n;}
+function calc(){if(!$('#A').value||!$('#B').value)return;let a=d($('#A').value),b=d($('#B').value),sign='';if(b<a){[a,b]=[b,a];sign='−';}
+ const inc=$('#inc').checked,n=diffDays(a,b)+(inc?1:0),bd=bizDays(a,inc?addDays(b,1):b),[y,m,dd]=ymd(a,b);
+ $('#out').innerHTML=`<div class="big">${sign}${plural(n,'day')}</div><div class="stats"><div><span>Weeks</span><b>${Math.floor(n/7)} wk ${n%7} d</b></div><div><span>Years, months, days</span><b>${y}y ${m}m ${dd}d</b></div><div><span>Business days (Mon–Fri)</span><b>${nf(bd)}</b></div><div><span>Hours</span><b>${nf(n*24)}</b></div></div>`;}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',calc));calc();
+const t=today(),Y=t.getFullYear(),nx=(m,dd)=>{let x=new Date(Y,m,dd);if(x<t)x=new Date(Y+1,m,dd);return x;};
+const th=(y)=>{const x=new Date(y,10,1);return new Date(y,10,1+((4-x.getDay()+7)%7)+21);};let tg=th(Y);if(tg<t)tg=th(Y+1);
+$('#cd tbody').innerHTML=[['New Year\'s Day',nx(0,1)],['Valentine\'s Day',nx(1,14)],['Independence Day',nx(6,4)],['Halloween',nx(9,31)],['Thanksgiving',tg],['Christmas',nx(11,25)]].sort((p,q)=>p[1]-q[1]).map(([k,x])=>`<tr><td>Days until ${k}</td><td>${fmt(x)}</td><td><b>${diffDays(t,x)}</b></td></tr>`).join('');
+</script>
+<section class="faq"><h2>Frequently asked questions</h2><details><summary>Does the count include the start and end date?</summary><p>By default it counts the days from the start date up to the end date, like most date tools (Jan 1 to Jan 2 = 1 day). Tick &#x27;Include end date&#x27; to count both days (useful for trips or contract periods).</p></details><details><summary>Are holidays excluded from business days?</summary><p>No. Business days here are Monday through Friday. Subtract any public holidays in the period yourself, for example the 11 U.S. federal holidays per year.</p></details><details><summary>How are months counted?</summary><p>Full calendar months from the start date, then the remaining days. Jan 15 to Mar 20 is 2 months and 5 days. When the start day does not exist in the end month, the month ends on its last day: Jan 31 to Feb 28 is 1 month.</p></details></section><section><h2>More calculators</h2><div class="grid"><a class="card c1" href="/date-add.html" data-k="Date Calculator: Add or Subtract Days What date is 90 days from today?"><i class="ic">➕</i><span class="tx"><b>Date Calculator: Add or Subtract Days</b><span>What date is 90 days from today?</span></span></a><a class="card c1" href="/age.html" data-k="Age Calculator Exact age &amp; next birthday"><i class="ic">🎂</i><span class="tx"><b>Age Calculator</b><span>Exact age &amp; next birthday</span></span></a><a class="card c1" href="/hours-calculator.html" data-k="Hours Calculator Hours between two times"><i class="ic">⏱️</i><span class="tx"><b>Hours Calculator</b><span>Hours between two times</span></span></a><a class="card c3" href="/hourly-to-salary.html" data-k="Hourly to Salary Calculator Hourly ↔ yearly, monthly, weekly pay"><i class="ic">$</i><span class="tx"><b>Hourly to Salary Calculator</b><span>Hourly ↔ yearly, monthly, weekly pay</span></span></a><a class="card c3" href="/time-card.html" data-k="Time Card Calculator Clock in/out → weekly hours &amp; pay"><i class="ic">🕘</i><span class="tx"><b>Time Card Calculator</b><span>Clock in/out → weekly hours &amp; pay</span></span></a><a class="card c3" href="/overtime.html" data-k="Overtime Pay Calculator Time and a half over 40 hours"><i class="ic">⏱</i><span class="tx"><b>Overtime Pay Calculator</b><span>Time and a half over 40 hours</span></span></a></div></section><p class="updated">Last reviewed: 2026-10-17</p></main><footer class="foot"><div class="wrap">
+<nav><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Use</a><a href="/contact.html">Contact</a></nav>
+<p>© 2026 CalcMoose. Results are estimates for general information only. Check important decisions with a qualified professional.</p>
+</div></footer>
+</body></html>
